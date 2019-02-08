@@ -1,5 +1,5 @@
 // Importing mysql connection
-const connection = require("./connection");
+const connection = require("./connection.js");
 
 //Helper function for SQL syntax
 function printQuestionMarks(num){
@@ -28,16 +28,17 @@ function objToSql(ob){
     return arr.toString();
 }
 
-const orm = {
-    selectAll: function(tableInput){
-        const queryString = "SELECT * FROM ??"
+let orm = {
+    selectAll: function(tableInput, cb){
+        let queryString = "SELECT * FROM ??"
         connection.query(queryString, [tableInput], function(err, result){
             if(err) throw err;
-            console.log(result);
+            console.log("orm" + result);
+            cb(result);
         })
     },
     insertOne: function(table, cols, vals, cb){
-        const queryString = "INSERT INTO " + table;
+        let queryString = "INSERT INTO " + table;
 
         queryString += " (";
         queryString += cols.toString();
@@ -55,14 +56,15 @@ const orm = {
         });
     },
     updateOne: function(table, objColVals, condition, cb){
-        const queryString = "UPDATE " + table;
+        console.log("orm-------- HERE" + JSON.stringify(objColVals));
+        let queryString = "UPDATE " + table;
 
         queryString += " SET ";
-        queryString += objToSql(objColVals);
-        queryString += "WHERE";
+        queryString += "devoured=true";
+        queryString += " WHERE ";
         queryString += condition;
 
-        console.log(queryString);
+        console.log("----------querystring " + queryString + "GOOD");
         connection.query(queryString, function(err, result){
             if (err) throw err;
 

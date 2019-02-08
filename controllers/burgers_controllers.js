@@ -3,7 +3,9 @@ const router = express.Router();
 const burger = require("../models/burger.js");
 
 router.get("/", function (req, res) {
-    burger.selectAll(function (data) {
+    // console.log('route hit -------------Good')
+    burger.selectAll(function(data) {
+        // console.log("data hit " + data + "-----------Good")
         let hbsObject = {
             burgers: data
         };
@@ -25,7 +27,7 @@ router.post("/api/burgers", function (req, res) {
 router.put("/api/burgers/:id", function (req, res) {
     let condition = "id = " + req.params.id;
 
-    console.log("condition", condition);
+    // console.log("condition--GOOD", condition);
 
     burger.updateOne({
         devoured: req.body.devoured
